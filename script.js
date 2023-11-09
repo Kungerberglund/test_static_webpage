@@ -1,11 +1,15 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const excelDataContainer = document.getElementById('excelData');
-
-    // Replace 'YOUR_EXCEL_FILE_SHAREABLE_LINK' with the actual shareable link of your Excel file
     const excelFileLink = 'https://docs.google.com/spreadsheets/d/1Wf7CPYuDWsYBCVCDoZRNUOBJG8r151R1UtPI19ZVTkE/edit?usp=sharing';
 
     fetch(excelFileLink)
-        .then(response => response.json()) // Assuming the data is in JSON format
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             // Process and display the data
             const table = document.createElement('table');
